@@ -14,4 +14,8 @@ class CalculatorTest < ActiveSupport::TestCase
   def test_returns_sum_for_two_numbers
     assert_equal 3, Calculator.add("1,2")
   end
+
+  def test_returns_sum_for_multiple_numbers
+    assert_equal 55, Calculator.add("1,2,3,4,5,6,7,8,9,10")
+  end
 end
