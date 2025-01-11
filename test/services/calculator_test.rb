@@ -27,4 +27,8 @@ class CalculatorTest < ActiveSupport::TestCase
     assert_equal 1, Calculator.add("1,\n")
     assert_equal 3, Calculator.add("1,\n2,\n")
   end
+
+  def test_supports_custom_delimiter
+    assert_equal 12, Calculator.add("//;\n1;\n2\n4\n5")
+  end
 end
