@@ -2,6 +2,8 @@
 
 class Calculator
   def self.add(string_numbers)
-    0 if string_numbers.empty?
+    return 0 if string_numbers.empty?
+
+    string_numbers.split(",").sum(&:to_i)
   end
 end
