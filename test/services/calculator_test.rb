@@ -67,4 +67,12 @@ class CalculatorTest < ActiveSupport::TestCase
 
     assert_equal "negative numbers are not allowed: -2", error.message
   end
+
+  def test_handles_mixed_delimiter_lengths
+    assert_equal 6, Calculator.add("//[*][%%]\n1*2%%3")
+  end
+
+  def test_handles_newlines_with_multiple_delimiters
+    assert_equal 15, Calculator.add("//[*][%][;;;;]\n1*2\n3%4;;;;5\n")
+  end
 end

@@ -10,7 +10,7 @@ class Calculator
 
     delimiter, string_numbers = parse_delimiter_and_numbers(string_numbers)
 
-    numbers = string_numbers.split(/[#{delimiter}\n]+/).reject(&:empty?).map(&:to_i)
+    numbers = string_numbers.split(/#{delimiter}|\n/).reject(&:empty?).map(&:to_i)
 
     numbers = numbers.reject { |num| num > MAX_ALLOWED_NUMBER }
 
@@ -24,25 +24,20 @@ class Calculator
   end
 
   private_class_method def self.parse_delimiter_and_numbers(string_numbers)
-    if string_numbers.start_with?("//")
-      delimiter, string_numbers = parse_custom_delimiter(string_numbers)
-    else
-      delimiter = ","
-    end
+    return [",", string_numbers] unless string_numbers.start_with?("//")
 
-    [delimiter, string_numbers]
+    if string_numbers.start_with?("//[")
+      delimiters = extract_multiple_delimiters(string_numbers)
+      numbers_start = string_numbers.index("\n") + 1
+      [delimiters, string_numbers[numbers_start..]]
+    else
+      [string_numbers[2], string_numbers[4..]]
+    end
   end
 
-  private_class_method def self.parse_custom_delimiter(string_numbers)
-    if string_numbers[2] == "["
-      end_index = string_numbers.index("]\n")
-      delimiter = Regexp.escape(string_numbers[3...end_index])
-      string_numbers = string_numbers[(end_index + 2)..]
-    else
-      delimiter = Regexp.escape(string_numbers[2])
-      string_numbers = string_numbers[4..]
-    end
-
-    [delimiter, string_numbers]
+  private_class_method def self.extract_multiple_delimiters(string_numbers)
+    delimiter_section = string_numbers[3..string_numbers.index("\n") - 1]
+    delimiters = delimiter_section.split("][").map { |d| d.delete("]") }
+    delimiters.map { |d| Regexp.escape(d) }.join("|")
   end
 end
