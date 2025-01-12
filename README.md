@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a simple string calculator that takes a string of numbers and returns the sum of those numbers.
 
-Things you may want to cover:
+## To Test the Calculator
+1. Clone the repository.
+2. Run `bundle install`.
+3. Open the Rails console by running: `rails c`.
 
-* Ruby version
+```rb
+irb(main):001> Calculator.add("1,2,3")
+=> 6
+```
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+For more details on the covered cases, check the [test cases](https://github.com/vijay2136/string-calculator/blob/main/test/services/calculator_test.rb).
