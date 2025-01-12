@@ -3,12 +3,16 @@
 class Calculator
   class NegativeNumbersAreNotAllowed < StandardError; end
 
+  MAX_ALLOWED_NUMBER = 1000
+
   def self.add(string_numbers)
     return 0 if string_numbers.empty?
 
     delimiter, string_numbers = parse_delimiter_and_numbers(string_numbers)
 
     numbers = string_numbers.split(/[#{delimiter}\n]+/).reject(&:empty?).map(&:to_i)
+
+    numbers = numbers.reject { |num| num > MAX_ALLOWED_NUMBER }
 
     negative_numbers = numbers.select(&:negative?)
 

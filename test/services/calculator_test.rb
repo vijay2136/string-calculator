@@ -47,4 +47,12 @@ class CalculatorTest < ActiveSupport::TestCase
 
     assert_equal "negative numbers are not allowed: -1, -4", error.message
   end
+
+  def test_ignores_numbers_greater_than1000
+    assert_equal 3, Calculator.add("1,2,\n1001\n")
+  end
+
+  def test_includes_numbers_upto1000
+    assert_equal 1003, Calculator.add("//}\n1}2}\n1000\n")
+  end
 end
